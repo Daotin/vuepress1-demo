@@ -17,8 +17,14 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
 
+      - name: Set Node Version
+        uses: actions/setup-node@v3
+        with:
+          node-version: 14
+          cache: yarn
+
       - name: Install and build
-        run: npm install && npm run build
+        run: yarn && yarn build
 
       - name: Create gh-pages branch
         run: |
