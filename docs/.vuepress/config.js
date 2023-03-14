@@ -1,6 +1,7 @@
 module.exports = {
   title: '天喻信息',
   description: '描述',
+  base: "/vuepress1-demo/",
   locales: {
     '/': {
       lang: 'zh-CN', // 将会被设置为 <html> 的 lang 属性

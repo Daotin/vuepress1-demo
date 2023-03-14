@@ -1,0 +1,41 @@
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches:
+      - main
+
+# 这里定义了一个作业deploy，该作业运行在ubuntu-latest操作系统上。作业中包含了三个步骤：
+
+# 1、使用actions/checkout action来checkout代码；
+# 2、安装依赖并构建项目；
+# 3、使用peaceiris/actions-gh-pages action来将构建好的文件发布到gh-pages分支上。
+jobs:
+  deploy: #任务名称
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Install and build
+        run: |
+          yarn install
+          yarn build
+
+      - name: Create gh-pages branch
+        run: |
+          git config --global user.email "daotin@qq.com"
+          git config --global user.name "Daotin"
+          git branch -D gh-pages || echo "No existing gh-pages branch"
+          git checkout --orphan gh-pages
+          git rm -rf .
+          touch README.md
+          git add README.md
+          git commit -m "Initial commit"
+          git push origin gh-pages
+
+      - name: Deploy
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          personal_token: ${{ secrets.VUEPRESS_GA_TOKEN }}
+          publish_dir: ./docs/.vuepress/dist
