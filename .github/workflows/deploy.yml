@@ -20,11 +20,10 @@ jobs:
       - name: Set Node Version
         uses: actions/setup-node@v3
         with:
-          node-version: 14
-          cache: yarn
+          node-version: 16
 
       - name: Install and build
-        run: yarn && yarn build
+        run: npm install && npm run build
 
       - name: Create gh-pages branch
         run: |
